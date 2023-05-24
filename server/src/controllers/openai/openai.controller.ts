@@ -21,6 +21,7 @@ export class OpenAiController {
     app.use('/api/openai', this.router);
   }
 
+  // returns a completion based on the provided prompt.
   createCompletion = (req: any, res: any, next: any) => {
     const prompt = req.body.prompt;
     if (!prompt) return next(new RouteError('Prompt is required', 400));
@@ -29,6 +30,7 @@ export class OpenAiController {
       .catch(err => next(new RouteError(err.message, 500)));
   }
 
+  // returns a completion based on the provided content.
   createChatCompletion = (req: any, res: any, next: any) => {
     const content = req.body.prompt;
     if (!content) return next(new RouteError('Content is required', 400));

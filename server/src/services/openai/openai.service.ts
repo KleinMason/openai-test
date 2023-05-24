@@ -22,6 +22,7 @@ export class OpenAiService {
     this._api = new OpenAIApi(configuration);
   }
 
+  // https://beta.openai.com/docs/api-reference/create-completion
   createCompletion = (prompt: string): Promise<string> => {
     return this._api.createCompletion({
       model: "text-davinci-003",
@@ -31,6 +32,7 @@ export class OpenAiService {
     }).then(response => response.data.choices[0].text);
   }
 
+  // https://beta.openai.com/docs/api-reference/create-chat-completion
   createChatCompletion = (content: string): Promise<string> => {
     return this._api.createChatCompletion({
       model: "gpt-3.5-turbo",
