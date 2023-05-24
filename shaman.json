@@ -1,0 +1,21 @@
+{
+	"name": "openai-test",
+	"projects": [
+		{
+			"name": "openai-server",
+			"environment": "node",
+			"template": "server",
+			"path": "server"
+		},
+		{
+			"name": "openai-client",
+			"environment": "node",
+			"template": "client",
+			"path": "client",
+			"runtimeDependencies": [
+        "openai-server"
+      ]
+		}
+	],
+	"transform": []
+}

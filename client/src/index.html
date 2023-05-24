@@ -1,0 +1,58 @@
+<html>
+
+<head>
+  <title>{{model.title}}</title>
+  {{> partials/metadata.partial.html }}
+  {{{bundles model.shaman.bundles}}}
+</head>
+
+<body>
+  {{> partials/header.partial.html }}
+  <div class="container-fluid top">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="prompt" style="display: block">Enter a prompt:</label>
+        <textarea name="prompt" id="prompt" rows="10" style="width: 100%; max-width: 100%;"></textarea>
+        <button onClick="submitForm('completion')">createCompletion</button>
+        <button onClick="submitForm('chat')">createChatCompletion</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <textarea name="response" id="response" rows="10" style="width: 100%; max-width: 100%;" disabled></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div style="visibility: hidden;">
+    <input id="apiBaseUri" type="hidden" value="{{model.apiBaseUri}}" />
+  </div>
+
+  <script>
+    submitForm = (method) => {
+      prompt = document.getElementById('prompt').value;
+      var apiBaseUri = document.getElementById("apiBaseUri").value;
+      var apiEndpoint = method === 'completion' ? '/openai/createCompletion' : '/openai/createChatCompletion';
+      let fetchData = {
+        method: "POST",
+        body: JSON.stringify({ prompt }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      };
+      var apiUri = `${apiBaseUri}${apiEndpoint}`;
+      fetch(`${apiUri}`, fetchData)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          document.getElementById('response').value = data.response;
+        })
+        .catch(error => console.error(error));
+    };
+  </script>
+
+</body>
+
+</html>
